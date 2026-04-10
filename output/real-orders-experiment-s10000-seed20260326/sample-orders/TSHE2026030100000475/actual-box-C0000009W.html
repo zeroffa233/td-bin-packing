@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Bin Packing Visualization</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #f4f5f6;
+    }
+    #canvas-wrap {
+      position: fixed;
+      inset: 0;
+    }
+    #legend {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 300px;
+      max-height: calc(100% - 32px);
+      overflow: auto;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #d6d8db;
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    #legend h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+    #legend ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    #legend li {
+      margin: 3px 0;
+    }
+    #tips {
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .swatch {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-wrap"></div>
+  <aside id="legend">
+    <h2>3D Bin Packing</h2>
+    <div>Case: TSHE2026030100000475::actual::C0000009W</div>
+    <div>Started At: 2026-03-26 14:34:09</div>
+    <div>Runtime: 2.416 ms</div>
+    <div>Packed: 7893889200 / 20479701000 (38.54%)</div>
+    <div>Container: [3670, 2670, 2090]</div>
+    <ul id="items"></ul>
+  </aside>
+  <div id="tips">Mouse: rotate | wheel: zoom | right drag: pan</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/lines/LineSegmentsGeometry.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/lines/LineGeometry.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/lines/LineMaterial.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/lines/LineSegments2.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/lines/Line2.js"></script>
+  <script>
+    const tips = document.getElementById('tips');
+
+    function hasWebGLSupport() {
+      try {
+        const canvas = document.createElement('canvas');
+        return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+      } catch (error) {
+        return false;
+      }
+    }
+
+    try {
+      if (!window.THREE || !THREE.OrbitControls || !THREE.LineSegments2
+          || !THREE.LineSegmentsGeometry || !THREE.LineMaterial) {
+        throw new Error('Failed to load Three.js from CDN.');
+      }
+      if (!hasWebGLSupport()) {
+        throw new Error('WebGL is not available in this browser or environment.');
+      }
+
+      const container = { sizeX: 3670, sizeY: 2670, sizeZ: 2090 };
+      const placements = [{"id":"G4776700#1","x":0,"y":0,"z":0,"sizeX":1650,"sizeY":1550,"sizeZ":300},{"id":"G4633100#1","x":1650,"y":0,"z":0,"sizeX":1430,"sizeY":1430,"sizeZ":290},{"id":"G4759600#1","x":0,"y":0,"z":300,"sizeX":1430,"sizeY":1430,"sizeZ":290},{"id":"G4486800#1","x":0,"y":0,"z":590,"sizeX":1420,"sizeY":510,"sizeZ":410},{"id":"G4797900#1","x":0,"y":1550,"z":0,"sizeX":420,"sizeY":1120,"sizeZ":351},{"id":"G4797900#2","x":420,"y":1550,"z":0,"sizeX":420,"sizeY":1120,"sizeZ":351},{"id":"G4797900#3","x":840,"y":1550,"z":0,"sizeX":420,"sizeY":1120,"sizeZ":351},{"id":"G4776900#1","x":1650,"y":0,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#10","x":1650,"y":60,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#11","x":1650,"y":120,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#12","x":1650,"y":180,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#13","x":1650,"y":240,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#14","x":1650,"y":300,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#15","x":1650,"y":360,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#16","x":1650,"y":420,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#17","x":1650,"y":480,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#18","x":1650,"y":540,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#19","x":1650,"y":600,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#2","x":1650,"y":660,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#20","x":1650,"y":720,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#21","x":1650,"y":780,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#22","x":1650,"y":840,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#23","x":1650,"y":900,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#24","x":1650,"y":960,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#25","x":1650,"y":1020,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#26","x":1650,"y":1080,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#3","x":1650,"y":1140,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#4","x":1650,"y":1200,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#5","x":1650,"y":1260,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#6","x":1650,"y":1320,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#7","x":1650,"y":1380,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#8","x":1650,"y":1440,"z":290,"sizeX":1620,"sizeY":60,"sizeZ":1520},{"id":"G4776900#9","x":1650,"y":0,"z":1810,"sizeX":1620,"sizeY":1520,"sizeZ":60},{"id":"G4759500#1","x":3270,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#10","x":3320,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#2","x":3370,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#3","x":3420,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#4","x":3470,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#5","x":3520,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#6","x":3570,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#7","x":3620,"y":0,"z":290,"sizeX":50,"sizeY":1400,"sizeZ":1400},{"id":"G4759500#8","x":1650,"y":0,"z":1870,"sizeX":1400,"sizeY":1400,"sizeZ":50},{"id":"G4759500#9","x":1650,"y":0,"z":1920,"sizeX":1400,"sizeY":1400,"sizeZ":50},{"id":"G4487200#1","x":3080,"y":0,"z":0,"sizeX":280,"sizeY":1100,"sizeZ":190},{"id":"G4487200#2","x":3360,"y":0,"z":0,"sizeX":280,"sizeY":1100,"sizeZ":190},{"id":"G4487200#3","x":1260,"y":1550,"z":0,"sizeX":280,"sizeY":1100,"sizeZ":190},{"id":"G4487200#4","x":1430,"y":0,"z":300,"sizeX":190,"sizeY":1100,"sizeZ":280},{"id":"G4487200#5","x":0,"y":510,"z":590,"sizeX":1100,"sizeY":280,"sizeZ":190},{"id":"G3681505#1","x":0,"y":790,"z":590,"sizeX":860,"sizeY":250,"sizeZ":160}];
+
+      const root = document.getElementById('canvas-wrap');
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xf4f5f6);
+      scene.up.set(0, 0, 1);
+
+      const maxDim = Math.max(container.sizeX, container.sizeY, container.sizeZ);
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+      camera.up.set(0, 0, 1);
+      camera.position.set(maxDim * 1.8, maxDim * 1.6, maxDim * 1.6);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      root.appendChild(renderer.domElement);
+
+      const resizableLineMaterials = [];
+
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 0, 0);
+      controls.update();
+
+      const ambient = new THREE.AmbientLight(0xffffff, 0.65);
+      scene.add(ambient);
+      const directional = new THREE.DirectionalLight(0xffffff, 0.7);
+      directional.position.set(1, 1, 2);
+      scene.add(directional);
+
+      const halfX = container.sizeX / 2;
+      const halfY = container.sizeY / 2;
+      const halfZ = container.sizeZ / 2;
+
+      const containerEdges = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(container.sizeX, container.sizeY, container.sizeZ)
+      );
+      const containerLine = new THREE.LineSegments(
+        containerEdges,
+        new THREE.LineBasicMaterial({ color: 0x1f2937 })
+      );
+      scene.add(containerLine);
+
+      function addContainerFaceGrid(sizeA, sizeB, origin, axisA, axisB, color) {
+        const positions = [];
+        for (let a = 0; a <= sizeA; a += 1) {
+          const start = origin.clone();
+          start[axisA] += a;
+          const end = start.clone();
+          end[axisB] += sizeB;
+          positions.push(start.x, start.y, start.z, end.x, end.y, end.z);
+        }
+        for (let b = 0; b <= sizeB; b += 1) {
+          const start = origin.clone();
+          start[axisB] += b;
+          const end = start.clone();
+          end[axisA] += sizeA;
+          positions.push(start.x, start.y, start.z, end.x, end.y, end.z);
+        }
+        const geometry = new THREE.LineSegmentsGeometry();
+        geometry.setPositions(positions);
+        const material = new THREE.LineMaterial({
+          color: color,
+          transparent: false,
+          opacity: 1,
+          depthWrite: false,
+          depthTest: false,
+          linewidth: 1,
+          resolution: new THREE.Vector2(window.innerWidth, window.innerHeight)
+        });
+        const line = new THREE.LineSegments2(geometry, material);
+        line.computeLineDistances();
+        line.renderOrder = 20;
+        scene.add(line);
+        resizableLineMaterials.push(material);
+      }
+
+      const gridInset = -2.0;
+      addContainerFaceGrid(
+        container.sizeX,
+        container.sizeY,
+        new THREE.Vector3(-halfX, -halfY, -halfZ - gridInset),
+        'x',
+        'y',
+        0xd8d8d8
+      );
+      addContainerFaceGrid(
+        container.sizeX,
+        container.sizeZ,
+        new THREE.Vector3(-halfX, -halfY - gridInset, -halfZ),
+        'x',
+        'z',
+        0xd8d8d8
+      );
+      addContainerFaceGrid(
+        container.sizeY,
+        container.sizeZ,
+        new THREE.Vector3(-halfX - gridInset, -halfY, -halfZ),
+        'y',
+        'z',
+        0xd8d8d8
+      );
+      addContainerFaceGrid(
+        container.sizeX,
+        container.sizeY,
+        new THREE.Vector3(-halfX, -halfY, halfZ + gridInset),
+        'x',
+        'y',
+        0xd8d8d8
+      );
+      addContainerFaceGrid(
+        container.sizeX,
+        container.sizeZ,
+        new THREE.Vector3(-halfX, halfY + gridInset, -halfZ),
+        'x',
+        'z',
+        0xd8d8d8
+      );
+      addContainerFaceGrid(
+        container.sizeY,
+        container.sizeZ,
+        new THREE.Vector3(halfX + gridInset, -halfY, -halfZ),
+        'y',
+        'z',
+        0xd8d8d8
+      );
+
+      const axis = new THREE.AxesHelper(maxDim * 0.8);
+      scene.add(axis);
+
+      const itemList = document.getElementById('items');
+      placements.forEach((item, idx) => {
+        const color = new THREE.Color().setHSL((idx * 0.17) % 1, 0.65, 0.55);
+        const geometry = new THREE.BoxGeometry(item.sizeX, item.sizeY, item.sizeZ);
+        const material = new THREE.MeshLambertMaterial({ color, transparent: true, opacity: 0.82 });
+        const mesh = new THREE.Mesh(geometry, material);
+
+        mesh.position.set(
+          -halfX + item.x + item.sizeX / 2,
+          -halfY + item.y + item.sizeY / 2,
+          -halfZ + item.z + item.sizeZ / 2
+        );
+        scene.add(mesh);
+
+        const edge = new THREE.LineSegments(
+          new THREE.EdgesGeometry(geometry),
+          new THREE.LineBasicMaterial({ color: 0x111111 })
+        );
+        edge.position.copy(mesh.position);
+        scene.add(edge);
+
+        const li = document.createElement('li');
+        const hex = '#' + color.getHexString();
+        li.innerHTML = `<span class="swatch" style="background:${hex}"></span>${item.id} origin=[${item.x},${item.y},${item.z}] size=[${item.sizeX},${item.sizeY},${item.sizeZ}]`;
+        itemList.appendChild(li);
+      });
+
+      function onResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        resizableLineMaterials.forEach(material => {
+          material.resolution.set(window.innerWidth, window.innerHeight);
+        });
+      }
+      window.addEventListener('resize', onResize);
+
+      function render() {
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
+      }
+      render();
+
+      tips.textContent = 'Mouse: rotate | wheel: zoom | right drag: pan';
+    } catch (error) {
+      tips.textContent = '3D render failed: ' + error.message;
+    }
+  </script>
+</body>
+</html>
