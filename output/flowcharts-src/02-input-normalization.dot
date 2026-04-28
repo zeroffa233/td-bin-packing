@@ -1,0 +1,47 @@
+digraph InputNormalization {
+  rankdir=TB;
+  graph [fontname="Helvetica"];
+  node [shape=box, style="rounded", fontname="Helvetica"];
+  edge [fontname="Helvetica"];
+
+  A [label="读取 Request"];
+  B [label="顶层空校验:\nitems / containers / order 是否为空"];
+  C [label="建立 items.code -> item 映射"];
+  D [label="建立 containers.code -> container 映射"];
+  E [label="遍历 orderDetail"];
+  F [label="读取字段 itemCode / groupId"];
+  G [label="按 itemCode 关联 item", shape=box];
+  H [label="商品存在?", shape=diamond];
+  X [label="返回失败:\n商品关联缺失", shape=octagon];
+  I [label="合并 item 与 orderDetail"];
+  J [label="尺寸是否合法?\nlength,... > 0", shape=diamond];
+  Y [label="返回失败:\n尺寸非法", shape=octagon];
+  K [label="csQty == null", shape=diamond];
+  L [label="quantity =  quantity"];
+  M [label="quantity = quantity % csQty"];
+  N [label="quantity > 0", shape=diamond];
+  O [label="该商品不进入调度集合"];
+  P [label="加入调度集合\n保留 groupId"];
+  Q [label="下一条 orderDetail", shape=diamond];
+  R [label="按 groupId 聚合调度集合"];
+  T [label="根据指定精度离散化所有 container 和调度集合内的 item"];
+  S [label="返回标准化 Request"];
+
+  A -> B -> C -> D -> E -> F -> G -> H;
+  H -> X [label="否"];
+  H -> I [label="是"];
+  I -> J;
+  J -> Y [label="否"];
+  J -> K [label="是"];
+  K -> L [label="是"];
+  K -> M [label="否"];
+  L -> N;
+  M -> N;
+  N -> O [label="否"];
+  N -> P [label="是"];
+  O -> Q;
+  P -> Q;
+  Q -> E [label="还有 orderDetail"];
+  Q -> R [label="结束"];
+  R -> T -> S;
+}

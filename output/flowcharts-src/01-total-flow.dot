@@ -1,0 +1,34 @@
+digraph TotalFlow {
+  rankdir=TB;
+  graph [fontname="Helvetica"];
+  node [shape=box, style="rounded", fontname="Helvetica"];
+  edge [fontname="Helvetica"];
+
+  A [label="Request"];
+  B [label="解析 Request"];
+  C [label="【图2】输入处理:\n\n1. item 关联 orderDetail\n\n2. orderDetail 合法性校验\n\n3. quantity 对 csQty 取余\n\n4. 聚合调度集合\n\n5. 离散化尺寸"];
+  P [label="按 groupId 分组:\n一个请求可包含多个 group\n每个 group 独立运行主流程"];
+  Q [label="选择下一个 group"];
+  D [label="carrierService", shape=diamond];
+  E [label="【图5】物流处理:\n按 stores 过滤箱型\n取最小体积箱型"];
+  F [label="快递处理:\n礼盒/散件分离\n按 stores 生成候选箱集合\n根据 sequence 和体积排序"];
+  G [label="【图4】lclRules 主编排:\n1. 选择当前最高优先级未处理规则\n2. 提取商品子集并计算标志位\n3. 调用单轮箱型求解子流程\n4. 命中/降级/兜底/删除已装商品\n5. 循环到剩余商品为空"];
+  H [label="单轮箱型求解子流程:\nflag=0 => 找规则边界箱\nflag=1 => 对全部剩余商品循环执行传统多箱装箱"];
+  I [label="得到当前 group 合法装箱结果"];
+  R [label="是否还有未处理 group?", shape=diamond];
+  J [label="合并所有 group 的合法装箱结果"];
+  K [label="【图6】装箱结果 Response 化"];
+  O [label="Response"];
+
+  A -> B -> C -> P -> Q -> D;
+  D -> E [label="1"];
+  D -> F [label="0"];
+  F -> G;
+  G -> H;
+  E -> I;
+  H -> I;
+  I -> R;
+  R -> Q [label="是"];
+  R -> J [label="否"];
+  J -> K -> O;
+}

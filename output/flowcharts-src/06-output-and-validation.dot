@@ -1,0 +1,17 @@
+digraph OutputAndValidation {
+  rankdir=TB;
+  graph [fontname="Helvetica"];
+  node [shape=box, style="rounded", fontname="Helvetica"];
+  edge [fontname="Helvetica"];
+
+  A [label="装箱结果"];
+  B [label="统计箱子数量"];
+  C [label="计算 ifMultiContainers:\n1=多箱, 0=单箱"];
+  E [label="code = code||\n(ifMultiContainers&&~unpackJudge)"];
+  F [label="生成 msg"];
+  G [label="装箱结果展开为 infos"];
+  J [label="透传 shipmentDetailId / shipmentCode /\nwaveId / batch / lot / manufactureDate /\nbuildCode / zoneCode / stores"];
+  K [label="返回 Response"];
+
+  A -> B -> C -> E -> F -> G -> J -> K;
+}

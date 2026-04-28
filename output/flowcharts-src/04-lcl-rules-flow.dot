@@ -1,0 +1,48 @@
+digraph LclRulesFlow {
+  rankdir=TB;
+  graph [fontname="Helvetica"];
+  node [shape=box, style="rounded", fontname="Helvetica"];
+  edge [fontname="Helvetica"];
+
+  A [label="lclRules 式编排"];
+  B [label="使用当前规则"];
+  C [label="按当前规则提取商品子集"];
+  D [label="子集是否等于剩余全部商品?", shape=diamond];
+  E [label="flag = 0:\n不是最后一批"];
+  F [label="flag = 1:\n已经是最后一批"];
+  G [label="flag = 0:\n以当前规则商品子集\n从小到大尝试候选箱"];
+  I [label="当前规则商品子集\n是否能装满某个箱子？", shape=diamond];
+  J [label="当前规则太严格\n该箱还未被装满"];
+  Q [label="同规则下是否还有更大子集?", shape=diamond];
+  K [label="是否还有更低优先级规则?", shape=diamond];
+  L [label="当前规则=更低优先级规则"];
+  M [label="当前规则商品子集未全部装入\n箱已经装满"];
+  N [label="锁定本箱装法"];
+  O [label="从剩余商品中删除\n本箱已装商品"];
+  R [label="返回拼箱成功结果"];
+  S [label="兜底路径:\n对全部剩余商品\n按类似 NO_LIMIT 方式强制装箱【图3】"];
+  T [label="兜底装箱结束后\n返回失败语义 code = 1", shape=octagon];
+  U [label="flag = 1:\n当前规则已覆盖全部剩余商品【图3】"];
+  V [label="图03 是否装箱成功?", shape=diamond];
+  W [label="成功:\n全部剩余商品已完成传统多箱装箱"];
+
+  A -> B -> C -> D;
+  D -> E [label="否"];
+  D -> F [label="是"];
+  E -> G -> I;
+  I -> J [label="否"];
+  I -> M [label="是"];
+  J -> Q;
+  Q -> K [label="否"];
+  Q -> B [label="是"];
+  K -> L [label="是"];
+  L -> B;
+  K -> S [label="否"];
+  S -> T;
+  M -> N -> O -> I;
+  F -> U -> V;
+  V -> W [label="是"];
+  V -> T [label="否"];
+  W -> R;
+  T -> R;
+}
