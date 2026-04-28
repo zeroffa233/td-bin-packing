@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "msg": "OK",
+  "containerCount": 1,
+  "containerUtilizations": [0.40347337962962965],
+  "averageUtilization": 0.40347337962962965,
+  "data": {
+    "infos": [
+      {
+        "shipmentDetailId": 2026041601001,
+        "shipmentCode": "TSHD2026041200015736",
+        "waveId": null,
+        "itemCode": "G4410201",
+        "itemName": "货品-G4410201",
+        "quantity": 1,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-BAO-01",
+        "zoneCode": "ZONE-BAO-01",
+        "stores": "巴欧",
+        "containerSequence": 1,
+        "containerCode": "LRLC0004W"
+      }
+    ]
+  }
+}

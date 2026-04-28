@@ -1,0 +1,185 @@
+{
+  "items": [
+    {
+      "code": "G4780101",
+      "name": "货品-G4780101",
+      "itemCategory1": "正品",
+      "itemCategory2": "非易碎",
+      "brand": "巴欧",
+      "itemSize": "",
+      "itemColor": "",
+      "itemStyle": "BAOU-SERIES-A",
+      "length": 0.03514,
+      "width": 0.042,
+      "height": 0.112,
+      "weight": 0.1,
+      "volume": 0.000165299,
+      "csQty": 24,
+      "allowDown": 1
+    },
+    {
+      "code": "G4780400",
+      "name": "货品-G4780400",
+      "itemCategory1": "正品",
+      "itemCategory2": "非易碎",
+      "brand": "巴欧",
+      "itemSize": "",
+      "itemColor": "",
+      "itemStyle": "BAOU-SERIES-A",
+      "length": 0.067,
+      "width": 0.067,
+      "height": 0.209,
+      "weight": 0.513,
+      "volume": 0.000938201,
+      "csQty": 8,
+      "allowDown": 1
+    }
+  ],
+  "containers": [
+    {
+      "code": "LRLC0002W",
+      "name": "巴欧C2物流箱",
+      "length": 0.18,
+      "width": 0.11,
+      "height": 0.09,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 1,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0003W",
+      "name": "巴欧C3物流箱",
+      "length": 0.21,
+      "width": 0.12,
+      "height": 0.115,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 2,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0004W",
+      "name": "巴欧C4物流箱",
+      "length": 0.24,
+      "width": 0.15,
+      "height": 0.12,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 3,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0005W",
+      "name": "巴欧C5物流箱",
+      "length": 0.24,
+      "width": 0.19,
+      "height": 0.13,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 4,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0010H",
+      "name": "巴欧C10物流箱",
+      "length": 0.427,
+      "width": 0.325,
+      "height": 0.328,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 5,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "COM00002L",
+      "name": "通用物流中箱",
+      "length": 0.4,
+      "width": 0.306,
+      "height": 0.506,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 6,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "COM00001H",
+      "name": "通用物流箱",
+      "length": 0.55,
+      "width": 0.385,
+      "height": 0.34,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 7,
+      "quantity": 999,
+      "stores": "巴欧"
+    }
+  ],
+  "orders": [
+    {
+      "shipmentDetailId": 2026041609001,
+      "shipmentCode": "AUTOTC0920260416",
+      "waveId": 9202609,
+      "itemCode": "G4780101",
+      "itemName": "货品-G4780101",
+      "quantity": 18,
+      "batch": "AAA",
+      "lot": "LOT-AAA",
+      "manufactureDate": "2026-04-01",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    },
+    {
+      "shipmentDetailId": 2026041609002,
+      "shipmentCode": "AUTOTC0920260416",
+      "waveId": 9202609,
+      "itemCode": "G4780101",
+      "itemName": "货品-G4780101",
+      "quantity": 18,
+      "batch": "BBB",
+      "lot": "LOT-BBB",
+      "manufactureDate": "2026-04-02",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    },
+    {
+      "shipmentDetailId": 2026041609003,
+      "shipmentCode": "AUTOTC0920260416",
+      "waveId": 9202609,
+      "itemCode": "G4780400",
+      "itemName": "货品-G4780400",
+      "quantity": 24,
+      "batch": "CCC",
+      "lot": "LOT-CCC",
+      "manufactureDate": "2026-04-03",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    }
+  ],
+  "lclRules": [
+    {
+      "sequence": 1,
+      "code": "SAME_SKU",
+      "name": "同品同箱"
+    }
+  ],
+  "unpackJudge": 1
+}

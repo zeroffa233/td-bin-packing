@@ -1,0 +1,21 @@
+digraph LogisticShortcutFlow {
+  rankdir=TB;
+  graph [fontname="Helvetica"];
+  node [shape=box, style="rounded", fontname="Helvetica"];
+  edge [fontname="Helvetica"];
+
+  A [label="进入物流快捷路径"];
+  B [label="读取首条 orderDetail.stores"];
+  C [label="过滤可用箱型:\ncontainer.stores == orderDetail.stores\n或任一为 null"];
+  D [label="是否存在可用箱型?", shape=diamond];
+  E [label="返回失败:\n无可用箱型", shape=octagon];
+  F [label="按体积升序排序候选箱"];
+  G [label="取体积最小的箱型"];
+  H [label="生成单箱结果"];
+  I [label="进入装箱结果 Response 化"];
+
+  A -> B -> C -> D;
+  D -> E [label="否"];
+  D -> F [label="是"];
+  F -> G -> H -> I;
+}

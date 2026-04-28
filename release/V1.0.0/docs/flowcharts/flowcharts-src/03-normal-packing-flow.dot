@@ -1,0 +1,42 @@
+digraph NormalPackingFlow {
+  rankdir=TB;
+  graph [fontname="Helvetica"];
+  node [shape=box, style="rounded", fontname="Helvetica"];
+  edge [fontname="Helvetica"];
+
+  A [label="输入:\n全部剩余商品\n已预处理商品集合 + 候选箱集合"];
+  B [label="按 stores 过滤候选箱:\ncontainer.stores == order.stores\n或任一为 null"];
+  C [label="按 (sequence, volume) 升序排序候选箱"];
+  D [label="选择当前待装商品集合:\n初始 = 全部剩余商品"];
+  E [label="取当前候选箱"];
+  F [label="箱型库存 quantity > 0?", shape=diamond];
+  G [label="跳过该箱型"];
+  H [label="调用核心装箱算法:\n以当前待装商品集合求解"];
+  I [label="是否全部装下当前待装商品?", shape=diamond];
+  J [label="尝试下一候选箱"];
+  K [label="得到一个箱子的装法"];
+  L [label="执行装后运行时合法性校验"];
+  M [label="校验通过?", shape=diamond];
+  N [label="锁定该箱装法"];
+  O [label="扣减该箱型 quantity"];
+  P [label="从剩余商品中删除已装商品"];
+  Q [label="是否还有剩余商品?", shape=diamond];
+  R [label="输出传统多箱装箱结果"];
+  S [label="返回失败:\n当前剩余商品无法命中任何合法箱型", shape=octagon];
+
+  A -> B -> C -> D -> E -> F;
+  F -> G [label="否"];
+  G -> E;
+  F -> H [label="是"];
+  H -> I;
+  I -> J [label="否"];
+  J -> E;
+  I -> K [label="是"];
+  K -> L -> M;
+  M -> J [label="否"];
+  M -> N [label="是"];
+  N -> O -> P -> Q;
+  Q -> D [label="是"];
+  Q -> R [label="否"];
+  E -> S [label="候选箱耗尽"];
+}

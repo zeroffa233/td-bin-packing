@@ -1,0 +1,43 @@
+{
+  "code": 0,
+  "msg": "OK",
+  "containerCount": 1,
+  "containerUtilizations": [0.1305845661735306],
+  "averageUtilization": 0.1305845661735306,
+  "data": {
+    "infos": [
+      {
+        "shipmentDetailId": 2026041609001,
+        "shipmentCode": "AUTOTC0920260416",
+        "waveId": 9202609,
+        "itemCode": "G4780101",
+        "itemName": "货品-G4780101",
+        "quantity": 18,
+        "batch": "AAA",
+        "lot": "LOT-AAA",
+        "manufactureDate": "2026-04-01",
+        "buildCode": "BUILD-BAO-01",
+        "zoneCode": "ZONE-BAO-01",
+        "stores": "巴欧",
+        "containerSequence": 1,
+        "containerCode": "LRLC0010H"
+      },
+      {
+        "shipmentDetailId": 2026041609002,
+        "shipmentCode": "AUTOTC0920260416",
+        "waveId": 9202609,
+        "itemCode": "G4780101",
+        "itemName": "货品-G4780101",
+        "quantity": 18,
+        "batch": "BBB",
+        "lot": "LOT-BBB",
+        "manufactureDate": "2026-04-02",
+        "buildCode": "BUILD-BAO-01",
+        "zoneCode": "ZONE-BAO-01",
+        "stores": "巴欧",
+        "containerSequence": 1,
+        "containerCode": "LRLC0010H"
+      }
+    ]
+  }
+}

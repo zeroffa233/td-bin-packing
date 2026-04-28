@@ -36,6 +36,10 @@ public class Orientation {
         int z = item.getSizeZ();
         Set<Orientation> set = new LinkedHashSet<>();
         set.add(new Orientation(x, y, z));
+        if (item.getAllowDown() == 0) {
+            set.add(new Orientation(y, x, z));
+            return new ArrayList<>(set);
+        }
         set.add(new Orientation(x, z, y));
         set.add(new Orientation(y, x, z));
         set.add(new Orientation(y, z, x));
@@ -49,9 +53,10 @@ public class Orientation {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Orientation that)) {
+        if (!(other instanceof Orientation)) {
             return false;
         }
+        Orientation that = (Orientation) other;
         return sizeX == that.sizeX && sizeY == that.sizeY && sizeZ == that.sizeZ;
     }
 

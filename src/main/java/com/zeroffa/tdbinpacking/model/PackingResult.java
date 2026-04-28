@@ -1,5 +1,6 @@
 package com.zeroffa.tdbinpacking.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class PackingResult {
 
     public PackingResult(ContainerBox containerBox, List<Placement> placements, List<Item> unplacedItems) {
         this.containerBox = containerBox;
-        this.placements = List.copyOf(placements);
-        this.unplacedItems = List.copyOf(unplacedItems);
+        this.placements = Collections.unmodifiableList(new ArrayList<Placement>(placements));
+        this.unplacedItems = Collections.unmodifiableList(new ArrayList<Item>(unplacedItems));
     }
 
     public ContainerBox getContainerBox() {

@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ExtremePointBinPacker {
 
@@ -25,7 +26,7 @@ public class ExtremePointBinPacker {
     public PackingResult pack(ContainerBox containerBox, List<Item> inputItems) {
         List<Item> sortedItems = inputItems.stream()
                 .sorted(Comparator.comparingLong(Item::volume).reversed().thenComparing(Item::getId))
-                .toList();
+                .collect(Collectors.toList());
 
         List<Placement> placedItems = new ArrayList<>();
         List<Item> unplacedItems = new ArrayList<>();
@@ -176,7 +177,7 @@ public class ExtremePointBinPacker {
                                       Placement newPlacement) {
         List<Placement> supportingPlacements = placedItems.stream()
                 .filter(placement -> placement != newPlacement)
-                .toList();
+                .collect(Collectors.toList());
 
         Set<ExtremePoint> candidates = new LinkedHashSet<>(extremePoints);
         candidates.addAll(generateProjectedPoints(newPlacement, supportingPlacements));
@@ -263,6 +264,27 @@ public class ExtremePointBinPacker {
         return false;
     }
 
-    private record Candidate(ExtremePoint extremePoint, Placement placement, int contactArea) {
+    private static class Candidate {
+        private final ExtremePoint extremePoint;
+        private final Placement placement;
+        private final int contactArea;
+
+        private Candidate(ExtremePoint extremePoint, Placement placement, int contactArea) {
+            this.extremePoint = extremePoint;
+            this.placement = placement;
+            this.contactArea = contactArea;
+        }
+
+        private ExtremePoint extremePoint() {
+            return extremePoint;
+        }
+
+        private Placement placement() {
+            return placement;
+        }
+
+        private int contactArea() {
+            return contactArea;
+        }
     }
 }

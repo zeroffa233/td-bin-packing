@@ -16,13 +16,16 @@ public enum ItemAttribute {
     }
 
     public static ItemAttribute fromCsvValue(String rawValue) {
-        if (rawValue == null || rawValue.isBlank()) {
+        if (rawValue == null || rawValue.trim().isEmpty()) {
             return PRODUCT;
         }
-        return switch (rawValue.trim().toLowerCase()) {
-            case "bag" -> BAG;
-            case "box" -> BOX;
-            default -> PRODUCT;
-        };
+        String normalized = rawValue.trim().toLowerCase();
+        if ("bag".equals(normalized)) {
+            return BAG;
+        }
+        if ("box".equals(normalized)) {
+            return BOX;
+        }
+        return PRODUCT;
     }
 }

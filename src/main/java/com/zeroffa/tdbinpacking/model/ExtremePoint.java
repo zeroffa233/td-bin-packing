@@ -34,9 +34,10 @@ public class ExtremePoint {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof ExtremePoint point)) {
+        if (!(other instanceof ExtremePoint)) {
             return false;
         }
+        ExtremePoint point = (ExtremePoint) other;
         return x == point.x && y == point.y && z == point.z;
     }
 

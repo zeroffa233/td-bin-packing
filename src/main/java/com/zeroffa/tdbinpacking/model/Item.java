@@ -7,13 +7,22 @@ public class Item {
     private final int sizeY;
     private final int sizeZ;
     private final ItemAttribute attribute;
+    private final int allowDown;
 
     public Item(String id, int sizeX, int sizeY, int sizeZ) {
         this(id, sizeX, sizeY, sizeZ, ItemAttribute.PRODUCT);
     }
 
     public Item(String id, int sizeX, int sizeY, int sizeZ, ItemAttribute attribute) {
-        if (id == null || id.isBlank()) {
+        this(id, sizeX, sizeY, sizeZ, attribute, 1);
+    }
+
+    public Item(String id, int sizeX, int sizeY, int sizeZ, int allowDown) {
+        this(id, sizeX, sizeY, sizeZ, ItemAttribute.PRODUCT, allowDown);
+    }
+
+    public Item(String id, int sizeX, int sizeY, int sizeZ, ItemAttribute attribute, int allowDown) {
+        if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException("id must not be blank");
         }
         validatePositive(sizeX, "sizeX");
@@ -22,11 +31,15 @@ public class Item {
         if (attribute == null) {
             throw new IllegalArgumentException("attribute must not be null");
         }
+        if (allowDown != 0 && allowDown != 1) {
+            throw new IllegalArgumentException("allowDown must be 0 or 1");
+        }
         this.id = id;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.sizeZ = sizeZ;
         this.attribute = attribute;
+        this.allowDown = allowDown;
     }
 
     public String getId() {
@@ -49,6 +62,10 @@ public class Item {
         return attribute;
     }
 
+    public int getAllowDown() {
+        return allowDown;
+    }
+
     public long volume() {
         return (long) sizeX * sizeY * sizeZ;
     }
@@ -61,6 +78,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return String.format("%s[%d,%d,%d,%s]", id, sizeX, sizeY, sizeZ, attribute.getCsvValue());
+        return String.format("%s[%d,%d,%d,%s,allowDown=%d]",
+                id, sizeX, sizeY, sizeZ, attribute.getCsvValue(), allowDown);
     }
 }

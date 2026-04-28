@@ -1,0 +1,123 @@
+{
+  "items": [
+    {
+      "code": "G4410201",
+      "name": "货品-G4410201",
+      "itemCategory1": "正品",
+      "itemCategory2": "非易碎",
+      "brand": "巴欧",
+      "itemSize": "",
+      "itemColor": "",
+      "itemStyle": "STYLE-G4410201",
+      "length": 0.215,
+      "width": 0.121,
+      "height": 0.067,
+      "weight": 0.508,
+      "volume": 0.001743005,
+      "csQty": 8,
+      "allowDown": 1
+    }
+  ],
+  "containers": [
+    {
+      "code": "LRLC0002W",
+      "name": "巴欧C2物流箱",
+      "length": 0.18,
+      "width": 0.11,
+      "height": 0.09,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 1,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0003W",
+      "name": "巴欧C3物流箱",
+      "length": 0.21,
+      "width": 0.12,
+      "height": 0.115,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 2,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0004W",
+      "name": "巴欧C4物流箱",
+      "length": 0.24,
+      "width": 0.15,
+      "height": 0.12,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 3,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0005W",
+      "name": "巴欧C5物流箱",
+      "length": 0.24,
+      "width": 0.19,
+      "height": 0.13,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 4,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0010H",
+      "name": "巴欧C10物流箱",
+      "length": 0.427,
+      "width": 0.325,
+      "height": 0.328,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 5,
+      "quantity": 999,
+      "stores": "巴欧"
+    },
+    {
+      "code": "COM00002L",
+      "name": "通用物流中箱",
+      "length": 0.4,
+      "width": 0.306,
+      "height": 0.506,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 6,
+      "quantity": 999,
+      "stores": "巴欧"
+    }
+  ],
+  "orders": [
+    {
+      "shipmentDetailId": 2026041601001,
+      "shipmentCode": "TSHD2026041200015736",
+      "waveId": null,
+      "itemCode": "G4410201",
+      "itemName": "货品-G4410201",
+      "quantity": 1,
+      "batch": null,
+      "lot": null,
+      "manufactureDate": null,
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    }
+  ],
+  "lclRules": [
+    {
+      "sequence": 7,
+      "code": "NO_LIMIT",
+      "name": "不限制",
+      "desc": "不限制"
+    }
+  ],
+  "unpackJudge": 0
+}

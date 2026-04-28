@@ -1,0 +1,91 @@
+{
+  "code": 0,
+  "msg": "OK",
+  "containerCount": 1,
+  "containerUtilizations": [24.58711457142857],
+  "averageUtilization": 24.58711457142857,
+  "data": {
+    "infos": [
+      {
+        "shipmentDetailId": 2026041605002,
+        "shipmentCode": "AUTOTC0520260416",
+        "waveId": null,
+        "itemCode": "G4477701",
+        "itemName": "货品-G4477701",
+        "quantity": 32,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0000H"
+      },
+      {
+        "shipmentDetailId": 2026041605003,
+        "shipmentCode": "AUTOTC0520260416",
+        "waveId": null,
+        "itemCode": "G4477701",
+        "itemName": "货品-G4477701",
+        "quantity": 32,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0000H"
+      },
+      {
+        "shipmentDetailId": 2026041605004,
+        "shipmentCode": "AUTOTC0520260416",
+        "waveId": null,
+        "itemCode": "G4454002",
+        "itemName": "货品-G4454002",
+        "quantity": 32,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0000H"
+      },
+      {
+        "shipmentDetailId": 2026041605005,
+        "shipmentCode": "AUTOTC0520260416",
+        "waveId": null,
+        "itemCode": "G4454002",
+        "itemName": "货品-G4454002",
+        "quantity": 32,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0000H"
+      },
+      {
+        "shipmentDetailId": 2026041605006,
+        "shipmentCode": "AUTOTC0520260416",
+        "waveId": null,
+        "itemCode": "G4454100",
+        "itemName": "货品-G4454100",
+        "quantity": 64,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0000H"
+      }
+    ]
+  }
+}

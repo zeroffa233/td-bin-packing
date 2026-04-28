@@ -1,0 +1,59 @@
+{
+  "code": 0,
+  "msg": "OK",
+  "containerCount": 1,
+  "containerUtilizations": [0.37075277777777776],
+  "averageUtilization": 0.37075277777777776,
+  "data": {
+    "infos": [
+      {
+        "shipmentDetailId": 2026041602001,
+        "shipmentCode": "TSHC2026033000023115",
+        "waveId": null,
+        "itemCode": "YCN06635",
+        "itemName": "货品-YCN06635",
+        "quantity": 2,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0003H"
+      },
+      {
+        "shipmentDetailId": 2026041602002,
+        "shipmentCode": "TSHC2026033000023115",
+        "waveId": null,
+        "itemCode": "G4454002",
+        "itemName": "货品-G4454002",
+        "quantity": 6,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0003H"
+      },
+      {
+        "shipmentDetailId": 2026041602003,
+        "shipmentCode": "TSHC2026033000023115",
+        "waveId": null,
+        "itemCode": "G2948303",
+        "itemName": "货品-G2948303",
+        "quantity": 4,
+        "batch": null,
+        "lot": null,
+        "manufactureDate": null,
+        "buildCode": "BUILD-MNY-01",
+        "zoneCode": "ZONE-MNY-01",
+        "stores": "美宝莲",
+        "containerSequence": 1,
+        "containerCode": "MNYX0003H"
+      }
+    ]
+  }
+}

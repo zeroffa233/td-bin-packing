@@ -1,0 +1,220 @@
+{
+  "items": [
+    {
+      "code": "G4780101",
+      "name": "货品-G4780101",
+      "itemCategory1": "正品",
+      "itemCategory2": "非易碎",
+      "brand": "巴欧",
+      "itemSize": "",
+      "itemColor": "",
+      "itemStyle": "BAOU-SERIES-A",
+      "length": 0.03514,
+      "width": 0.042,
+      "height": 0.112,
+      "weight": 0.1,
+      "volume": 0.000165299,
+      "csQty": 0,
+      "allowDown": 1
+    },
+    {
+      "code": "G4780400",
+      "name": "货品-G4780400",
+      "itemCategory1": "正品",
+      "itemCategory2": "非易碎",
+      "brand": "巴欧",
+      "itemSize": "",
+      "itemColor": "",
+      "itemStyle": "BAOU-SERIES-B",
+      "length": 0.067,
+      "width": 0.067,
+      "height": 0.209,
+      "weight": 0.513,
+      "volume": 0.000938201,
+      "csQty": 0,
+      "allowDown": 1
+    },
+    {
+      "code": "G4797900",
+      "name": "货品-G4797900",
+      "itemCategory1": "正品",
+      "itemCategory2": "非易碎",
+      "brand": "巴欧",
+      "itemSize": "",
+      "itemColor": "",
+      "itemStyle": "BAOU-SERIES-B",
+      "length": 0.03514,
+      "width": 0.042,
+      "height": 0.112,
+      "weight": 0.1,
+      "volume": 0.000165299,
+      "csQty": 0,
+      "allowDown": 1
+    }
+  ],
+  "containers": [
+    {
+      "code": "LRLC0003W",
+      "name": "巴欧C3物流箱",
+      "length": 0.21,
+      "width": 0.12,
+      "height": 0.115,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 1,
+      "quantity": 1,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0004W",
+      "name": "巴欧C4物流箱",
+      "length": 0.24,
+      "width": 0.15,
+      "height": 0.12,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 2,
+      "quantity": 2,
+      "stores": "巴欧"
+    },
+    {
+      "code": "LRLC0005W",
+      "name": "巴欧C5物流箱",
+      "length": 0.24,
+      "width": 0.19,
+      "height": 0.13,
+      "maxWeight": null,
+      "capacityRate": 97,
+      "sequence": 3,
+      "quantity": 1,
+      "stores": "巴欧"
+    }
+  ],
+  "orders": [
+    {
+      "shipmentDetailId": 2026041709001,
+      "shipmentCode": "TSHE2026041700090001",
+      "waveId": 202604170001,
+      "itemCode": "G4780101",
+      "itemName": "货品-G4780101",
+      "quantity": 24,
+      "batch": "AAA",
+      "lot": "LOT-AAA",
+      "manufactureDate": "2026-04-10",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    },
+    {
+      "shipmentDetailId": 2026041709002,
+      "shipmentCode": "TSHE2026041700090001",
+      "waveId": 202604170001,
+      "itemCode": "G4780101",
+      "itemName": "货品-G4780101",
+      "quantity": 10,
+      "batch": "BBB",
+      "lot": "LOT-BBB",
+      "manufactureDate": "2026-04-11",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    },
+    {
+      "shipmentDetailId": 2026041709003,
+      "shipmentCode": "TSHE2026041700090001",
+      "waveId": 202604170001,
+      "itemCode": "G4780101",
+      "itemName": "货品-G4780101",
+      "quantity": 14,
+      "batch": "CCC",
+      "lot": "LOT-CCC",
+      "manufactureDate": "2026-04-12",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    },
+    {
+      "shipmentDetailId": 2026041709004,
+      "shipmentCode": "TSHE2026041700090001",
+      "waveId": 202604170001,
+      "itemCode": "G4780101",
+      "itemName": "货品-G4780101",
+      "quantity": 2,
+      "batch": "DDD",
+      "lot": "LOT-DDD",
+      "manufactureDate": "2026-04-13",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    },
+    {
+      "shipmentDetailId": 2026041709005,
+      "shipmentCode": "TSHE2026041700090001",
+      "waveId": 202604170001,
+      "itemCode": "G4780400",
+      "itemName": "货品-G4780400",
+      "quantity": 5,
+      "batch": "EEE",
+      "lot": "LOT-EEE",
+      "manufactureDate": "2026-04-14",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    },
+    {
+      "shipmentDetailId": 2026041709006,
+      "shipmentCode": "TSHE2026041700090001",
+      "waveId": 202604170001,
+      "itemCode": "G4797900",
+      "itemName": "货品-G4797900",
+      "quantity": 12,
+      "batch": "FFF",
+      "lot": "LOT-FFF",
+      "manufactureDate": "2026-04-15",
+      "buildCode": "BUILD-BAO-01",
+      "zoneCode": "ZONE-BAO-01",
+      "stores": "巴欧",
+      "carrierService": 0,
+      "isTaoX": 0,
+      "groupId": 0
+    }
+  ],
+  "lclRules": [
+    {
+      "sequence": 1,
+      "code": "SAME_SKU_LOT",
+      "name": "同品同批次同箱"
+    },
+    {
+      "sequence": 2,
+      "code": "SAME_SKU",
+      "name": "同品同箱"
+    },
+    {
+      "sequence": 3,
+      "code": "SAME_TYPE",
+      "name": "同款同箱"
+    },
+    {
+      "sequence": 4,
+      "code": "NO_LIMIT",
+      "name": "不限制"
+    }
+  ],
+  "unpackJudge": 1
+}
