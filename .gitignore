@@ -19,6 +19,7 @@
 
 # Root-level documents: only keep 参数列表.md
 /*.md
+!/README.md
 !/参数列表.md
 
 # Other root-level office / note documents do not sync
