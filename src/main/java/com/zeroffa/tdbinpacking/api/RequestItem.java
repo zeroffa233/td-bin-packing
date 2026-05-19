@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class RequestItem {
     private final String code;
+    private final String unitCode;
     private final String itemCategory1;
     private final String itemCategory2;
     private final BigDecimal weight;
@@ -19,11 +20,12 @@ public class RequestItem {
     private final String itemColor;
     private final String itemStyle;
 
-    public RequestItem(String code, String itemCategory1, String itemCategory2, BigDecimal weight,
+    public RequestItem(String code, String unitCode, String itemCategory1, String itemCategory2, BigDecimal weight,
                        BigDecimal length, BigDecimal width, BigDecimal height, Long csQty, int allowDown,
                        BigDecimal volume, String name, String brand, String itemSize, String itemColor,
                        String itemStyle) {
         this.code = code;
+        this.unitCode = unitCode;
         this.itemCategory1 = itemCategory1;
         this.itemCategory2 = itemCategory2;
         this.weight = weight;
@@ -41,6 +43,7 @@ public class RequestItem {
     }
 
     public String code() { return code; }
+    public String unitCode() { return unitCode; }
     public String itemCategory1() { return itemCategory1; }
     public String itemCategory2() { return itemCategory2; }
     public BigDecimal weight() { return weight; }

@@ -1,2 +1,27 @@
-/target
+# Build outputs
+/target/
+/dist/
 
+# Runtime / local outputs
+/input/
+/output/
+/scripts/
+
+# Local workspace files
+/.tmp/
+/.vscode/
+
+# Local raw source data
+/raw_data/
+
+# Release artifacts are published through GitHub Releases, not stored in git
+/release/*
+
+# Root-level documents: only keep 参数列表.md
+/*.md
+!/参数列表.md
+
+# Other root-level office / note documents do not sync
+/*.docx
+/*.xlsx
+/*.txt

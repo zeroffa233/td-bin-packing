@@ -8,7 +8,7 @@ class RuntimeLegalityValidator {
         return isWeightLegal(attempt) && isCapacityLegal(attempt);
     }
 
-    private boolean isWeightLegal(SingleBoxPackingAttempt attempt) {
+    boolean isWeightLegal(SingleBoxPackingAttempt attempt) {
         BigDecimal maxWeight = attempt.container().maxWeight();
         if (maxWeight == null) {
             return true;
@@ -20,7 +20,7 @@ class RuntimeLegalityValidator {
         return totalWeight.compareTo(maxWeight) <= 0;
     }
 
-    private boolean isCapacityLegal(SingleBoxPackingAttempt attempt) {
+    boolean isCapacityLegal(SingleBoxPackingAttempt attempt) {
         BigDecimal capacityRate = attempt.container().capacityRate();
         if (capacityRate == null) {
             return true;

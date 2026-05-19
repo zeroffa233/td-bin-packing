@@ -79,6 +79,7 @@ public class PackingJsonCodec {
             Map<String, Object> item = object(value, "items[]");
             result.add(new RequestItem(
                     text(item.get("code")),
+                    text(item.get("unitCode")),
                     text(item.get("itemCategory1")),
                     text(item.get("itemCategory2")),
                     decimal(item.get("weight")),
@@ -127,6 +128,7 @@ public class PackingJsonCodec {
                     text(order.get("shipmentCode")),
                     nullableLong(order.get("waveId")),
                     text(order.get("itemCode")),
+                    text(order.get("unitCode")),
                     text(order.get("itemName")),
                     longValue(order.get("quantity"), "quantity", 0L),
                     text(order.get("batch")),

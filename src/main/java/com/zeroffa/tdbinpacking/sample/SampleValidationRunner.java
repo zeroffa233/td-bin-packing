@@ -25,6 +25,7 @@ public class SampleValidationRunner {
     private static PackingRequest sampleOneRequest() {
         List<RequestItem> items = Collections.singletonList(new RequestItem(
                 "G4410201",
+                "EA",
                 "正品",
                 "非易碎",
                 decimal("0.508"),
@@ -55,6 +56,7 @@ public class SampleValidationRunner {
                 "TSHD2026041200015736",
                 null,
                 "G4410201",
+                "EA",
                 "货品-G4410201",
                 1L,
                 null,

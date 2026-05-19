@@ -13,12 +13,12 @@ public class ResponseInfo {
     private final String buildCode;
     private final String zoneCode;
     private final String stores;
-    private final int containerSequence;
+    private final Integer containerSequence;
     private final String containerCode;
 
     public ResponseInfo(long shipmentDetailId, String shipmentCode, Long waveId, String itemCode, String itemName,
                         long quantity, String batch, String lot, String manufactureDate, String buildCode,
-                        String zoneCode, String stores, int containerSequence, String containerCode) {
+                        String zoneCode, String stores, Integer containerSequence, String containerCode) {
         this.shipmentDetailId = shipmentDetailId;
         this.shipmentCode = shipmentCode;
         this.waveId = waveId;
@@ -47,6 +47,6 @@ public class ResponseInfo {
     public String buildCode() { return buildCode; }
     public String zoneCode() { return zoneCode; }
     public String stores() { return stores; }
-    public int containerSequence() { return containerSequence; }
+    public Integer containerSequence() { return containerSequence; }
     public String containerCode() { return containerCode; }
 }

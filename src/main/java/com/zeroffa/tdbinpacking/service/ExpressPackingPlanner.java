@@ -25,8 +25,12 @@ class ExpressPackingPlanner {
         List<ContainerCandidate> candidates = containerCandidateService.candidatesForGroup(group, containers);
         if (candidates.isEmpty()) {
             return new GroupPackingPlan(group.groupId(), Collections.<PackedContainer>emptyList(), true,
-                    "no container matches stores for group " + group.groupId());
+                    "group " + group.groupId() + " 装箱失败：未找到匹配门店[" + safe(group.stores()) + "]的可用箱型");
         }
         return lclRuleOrchestrator.pack(group.groupId(), preprocessedItems, candidates, rules);
+    }
+
+    private String safe(String value) {
+        return value == null || value.trim().isEmpty() ? "未指定" : value;
     }
 }

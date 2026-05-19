@@ -36,7 +36,7 @@ public class PackingService {
         try {
             NormalizedRequest normalizedRequest = normalizer.normalize(request);
             RequestPackingPlan plan = coordinator.pack(normalizedRequest);
-            return responseAssembler.assemble(plan, normalizedRequest.unpackJudge());
+            return responseAssembler.assemble(plan, normalizedRequest.unpackJudge(), normalizedRequest.preAssignedInfos());
         } catch (BusinessException | IllegalArgumentException exception) {
             return new PackingResponse(1, exception.getMessage(), new ResponseData(Collections.<com.zeroffa.tdbinpacking.api.ResponseInfo>emptyList()));
         }

@@ -35,14 +35,17 @@ final class NormalizedRequest {
     private final int carrierService;
     private final List<LclRuleSpec> lclRules;
     private final int unpackJudge;
+    private final List<com.zeroffa.tdbinpacking.api.ResponseInfo> preAssignedInfos;
 
     NormalizedRequest(Map<Integer, PackingGroup> groups, List<ContainerCandidate> containers,
-                      int carrierService, List<LclRuleSpec> lclRules, int unpackJudge) {
+                      int carrierService, List<LclRuleSpec> lclRules, int unpackJudge,
+                      List<com.zeroffa.tdbinpacking.api.ResponseInfo> preAssignedInfos) {
         this.groups = groups;
         this.containers = containers;
         this.carrierService = carrierService;
         this.lclRules = lclRules;
         this.unpackJudge = unpackJudge;
+        this.preAssignedInfos = preAssignedInfos;
     }
 
     Map<Integer, PackingGroup> groups() { return groups; }
@@ -50,6 +53,7 @@ final class NormalizedRequest {
     int carrierService() { return carrierService; }
     List<LclRuleSpec> lclRules() { return lclRules; }
     int unpackJudge() { return unpackJudge; }
+    List<com.zeroffa.tdbinpacking.api.ResponseInfo> preAssignedInfos() { return preAssignedInfos; }
 }
 
 final class PackingGroup {

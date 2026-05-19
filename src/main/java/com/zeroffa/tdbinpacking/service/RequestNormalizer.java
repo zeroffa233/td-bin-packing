@@ -5,6 +5,7 @@ import com.zeroffa.tdbinpacking.api.OrderDetail;
 import com.zeroffa.tdbinpacking.api.PackingRequest;
 import com.zeroffa.tdbinpacking.api.RequestContainer;
 import com.zeroffa.tdbinpacking.api.RequestItem;
+import com.zeroffa.tdbinpacking.api.ResponseInfo;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -31,23 +32,35 @@ public class RequestNormalizer {
 
     NormalizedRequest normalize(PackingRequest request) {
         validateRequest(request);
-        Map<String, RequestItem> itemsByCode = buildItemIndex(request.items());
+        Map<ItemKey, RequestItem> itemsByCode = buildItemIndex(request.items());
         List<ContainerCandidate> containers = normalizeContainers(request.containers());
 
         int carrierService = request.order().get(0).carrierService();
         validateCarrierService(carrierService);
 
         Map<Integer, List<SchedulableItem>> itemsByGroup = new LinkedHashMap<>();
+        List<ResponseInfo> preAssignedInfos = new ArrayList<ResponseInfo>();
+        int nextPreAssignedContainerSequence = 1;
         for (OrderDetail detail : request.order()) {
+            validateUnitCode(detail.unitCode(), "order.unitCode");
             validateCarrierService(detail.carrierService());
             if (detail.carrierService() != carrierService) {
                 throw new BusinessException("all orderDetail.carrierService values must be equal");
             }
-            RequestItem item = itemsByCode.get(detail.itemCode());
+            RequestItem item = itemsByCode.get(ItemKey.of(detail.itemCode(), detail.unitCode()));
             if (item == null) {
-                throw new BusinessException("itemCode not found: " + detail.itemCode());
+                throw new BusinessException("item not found for itemCode=" + detail.itemCode()
+                        + ", unitCode=" + nullSafe(detail.unitCode()));
             }
-            long schedulableQuantity = schedulableQuantity(detail.quantity(), item.csQty());
+            QuantityPlan quantityPlan = quantityPlan(detail, item, carrierService, request.unpackJudge());
+            if (quantityPlan.preAssignedQuantity > 0L) {
+                long caseQuantity = item.csQty() == null ? quantityPlan.preAssignedQuantity : item.csQty().longValue();
+                long caseCount = caseQuantity == 0L ? 0L : quantityPlan.preAssignedQuantity / caseQuantity;
+                for (long caseIndex = 0L; caseIndex < caseCount; caseIndex++) {
+                    preAssignedInfos.add(toPreAssignedInfo(detail, caseQuantity, nextPreAssignedContainerSequence++));
+                }
+            }
+            long schedulableQuantity = quantityPlan.schedulableQuantity;
             if (schedulableQuantity == 0L) {
                 continue;
             }
@@ -69,7 +82,8 @@ public class RequestNormalizer {
         }
 
         List<LclRuleSpec> rules = normalizeRules(request.lclRules());
-        return new NormalizedRequest(groups, containers, carrierService, rules, request.unpackJudge());
+        return new NormalizedRequest(groups, containers, carrierService, rules, request.unpackJudge(),
+                Collections.unmodifiableList(new ArrayList<ResponseInfo>(preAssignedInfos)));
     }
 
     private void validateRequest(PackingRequest request) {
@@ -90,16 +104,22 @@ public class RequestNormalizer {
         }
     }
 
-    private Map<String, RequestItem> buildItemIndex(List<RequestItem> items) {
-        Map<String, RequestItem> result = new LinkedHashMap<>();
+    private Map<ItemKey, RequestItem> buildItemIndex(List<RequestItem> items) {
+        Map<ItemKey, RequestItem> result = new LinkedHashMap<ItemKey, RequestItem>();
         for (RequestItem item : items) {
             if (item.code() == null || item.code().trim().isEmpty()) {
                 throw new BusinessException("item.code must not be blank");
             }
+            validateUnitCode(item.unitCode(), "item.unitCode");
             if (item.allowDown() != 0 && item.allowDown() != 1) {
                 throw new BusinessException("item.allowDown must be 0 or 1: " + item.code());
             }
-            result.put(item.code(), item);
+            ItemKey key = ItemKey.of(item.code(), item.unitCode());
+            if (result.containsKey(key)) {
+                throw new BusinessException("duplicate item for itemCode=" + item.code()
+                        + ", unitCode=" + nullSafe(item.unitCode()));
+            }
+            result.put(key, item);
         }
         return result;
     }
@@ -131,17 +151,49 @@ public class RequestNormalizer {
                 .collect(Collectors.toList());
     }
 
-    private long schedulableQuantity(long quantity, Long csQty) {
+    private QuantityPlan quantityPlan(OrderDetail detail, RequestItem item, int carrierService, int unpackJudge) {
+        long quantity = detail.quantity();
         if (quantity < 0) {
             throw new BusinessException("order.quantity must not be negative");
         }
-        if (csQty == null) {
-            return quantity;
+        if (carrierService != 0) {
+            return new QuantityPlan(quantity, 0L);
         }
-        if (csQty <= 0) {
+        if (unpackJudge == 0) {
+            return new QuantityPlan(quantity, 0L);
+        }
+        Long csQty = item.csQty();
+        if (csQty == null) {
+            return new QuantityPlan(quantity, 0L);
+        }
+        if (csQty.longValue() == 0L) {
+            return new QuantityPlan(quantity, 0L);
+        }
+        if (csQty.longValue() < 0L) {
             throw new BusinessException("item.csQty must be positive when present");
         }
-        return quantity % csQty;
+        long schedulableQuantity = quantity % csQty.longValue();
+        long preAssignedQuantity = quantity - schedulableQuantity;
+        return new QuantityPlan(schedulableQuantity, preAssignedQuantity);
+    }
+
+    private ResponseInfo toPreAssignedInfo(OrderDetail detail, long quantity, int containerSequence) {
+        return new ResponseInfo(
+                detail.shipmentDetailId(),
+                detail.shipmentCode(),
+                detail.waveId(),
+                detail.itemCode(),
+                detail.itemName(),
+                quantity,
+                detail.batch(),
+                detail.lot(),
+                detail.manufactureDate(),
+                detail.buildCode(),
+                detail.zoneCode(),
+                detail.stores(),
+                Integer.valueOf(containerSequence),
+                "CS"
+        );
     }
 
     private int scaleDimension(BigDecimal value, String field) {
@@ -166,11 +218,67 @@ public class RequestNormalizer {
         }
     }
 
+    private void validateUnitCode(String unitCode, String field) {
+        if (unitCode == null || unitCode.trim().isEmpty()) {
+            return;
+        }
+        String normalized = unitCode.trim();
+        if (!"CS".equals(normalized) && !"EA".equals(normalized) && !"MP".equals(normalized)
+                && !"PL".equals(normalized) && !"SP".equals(normalized)) {
+            throw new BusinessException(field + " must be one of CS, EA, MP, PL, SP");
+        }
+    }
+
+    private String nullSafe(String value) {
+        return value == null ? "null" : value;
+    }
+
     private String resolveGroupStores(List<SchedulableItem> items) {
         return items.stream()
                 .map(SchedulableItem::stores)
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static final class QuantityPlan {
+        private final long schedulableQuantity;
+        private final long preAssignedQuantity;
+
+        private QuantityPlan(long schedulableQuantity, long preAssignedQuantity) {
+            this.schedulableQuantity = schedulableQuantity;
+            this.preAssignedQuantity = preAssignedQuantity;
+        }
+    }
+
+    private static final class ItemKey {
+        private final String itemCode;
+        private final String unitCode;
+
+        private ItemKey(String itemCode, String unitCode) {
+            this.itemCode = itemCode;
+            this.unitCode = unitCode;
+        }
+
+        private static ItemKey of(String itemCode, String unitCode) {
+            return new ItemKey(itemCode, unitCode);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (!(other instanceof ItemKey)) {
+                return false;
+            }
+            ItemKey that = (ItemKey) other;
+            return Objects.equals(itemCode, that.itemCode) && Objects.equals(unitCode, that.unitCode);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(itemCode, unitCode);
+        }
     }
 }

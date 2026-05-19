@@ -5,6 +5,7 @@ public class OrderDetail {
     private final String shipmentCode;
     private final Long waveId;
     private final String itemCode;
+    private final String unitCode;
     private final String itemName;
     private final long quantity;
     private final String batch;
@@ -17,13 +18,14 @@ public class OrderDetail {
     private final int isTaoX;
     private final int groupId;
 
-    public OrderDetail(long shipmentDetailId, String shipmentCode, Long waveId, String itemCode, String itemName,
+    public OrderDetail(long shipmentDetailId, String shipmentCode, Long waveId, String itemCode, String unitCode, String itemName,
                        long quantity, String batch, String lot, String manufactureDate, String buildCode,
                        String zoneCode, String stores, int carrierService, int isTaoX, int groupId) {
         this.shipmentDetailId = shipmentDetailId;
         this.shipmentCode = shipmentCode;
         this.waveId = waveId;
         this.itemCode = itemCode;
+        this.unitCode = unitCode;
         this.itemName = itemName;
         this.quantity = quantity;
         this.batch = batch;
@@ -41,6 +43,7 @@ public class OrderDetail {
     public String shipmentCode() { return shipmentCode; }
     public Long waveId() { return waveId; }
     public String itemCode() { return itemCode; }
+    public String unitCode() { return unitCode; }
     public String itemName() { return itemName; }
     public long quantity() { return quantity; }
     public String batch() { return batch; }

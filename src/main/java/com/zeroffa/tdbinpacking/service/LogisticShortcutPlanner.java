@@ -18,7 +18,7 @@ class LogisticShortcutPlanner {
                 .min(Comparator.comparingLong(ContainerCandidate::volume).thenComparing(ContainerCandidate::code))
                 .map(container -> toPlan(group, container))
                 .orElseGet(() -> new GroupPackingPlan(group.groupId(), Collections.<PackedContainer>emptyList(), true,
-                        "no container matches stores for group " + group.groupId()));
+                        "group " + group.groupId() + " 装箱失败：未找到匹配门店[" + safe(group.stores()) + "]的物流捷径箱型"));
     }
 
     private GroupPackingPlan toPlan(PackingGroup group, ContainerCandidate container) {
@@ -29,5 +29,9 @@ class LogisticShortcutPlanner {
                 Collections.singletonList(new PackedContainer(group.groupId(), container, packedItems)),
                 false,
                 "");
+    }
+
+    private String safe(String value) {
+        return value == null || value.trim().isEmpty() ? "未指定" : value;
     }
 }

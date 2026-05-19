@@ -74,8 +74,8 @@ class LclRuleOrchestrator {
         GroupPackingPlan fallback = traditionalPlanner.packAll(groupId, remaining.items(), candidates);
         removePackedItems(remaining, fallback.containers());
         String message = fallback.failed()
-                ? "lclRules fallback failed in group " + groupId + ": " + fallback.message()
-                : "lclRules fallback used in group " + groupId;
+                ? "group " + groupId + " 触发 lclRules 兜底装箱失败：" + fallback.message()
+                : "group " + groupId + " 未命中前置拼箱规则，已使用 NO_LIMIT 兜底装箱";
         return new RuleCycleResult(fallback.containers(), true, message);
     }
 
